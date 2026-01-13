@@ -1,4 +1,4 @@
-import { PlayCircleIcon } from "lucide-react";
+import { PlayCircleIcon, StopCircleIcon } from "lucide-react";
 import { DefaultButton } from "../DefaultButton";
 import { DefaultInput } from "../DefaultInput";
 import { Cycles } from "../Cycles";
@@ -7,12 +7,14 @@ import styles from "./styles.module.css";
 import type React from "react";
 import { useRef } from "react";
 import type { TaskModel } from "../../models/TaskModel";
-import { useTaskContext } from "../../contexts/TaskContext";
+
 import { getNextCycle } from "../../utils/getNextCycle";
 import { getNextCycleType } from "../../utils/getNextCycleType";
+import { formatSecondsToMinutes } from "../../utils/formatSecondsToMinutes";
+import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 
 export function MainForm() {
-  const { state,setState } = useTaskContext();
+  const { state, setState } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
 
   // ciclos
@@ -49,8 +51,25 @@ export function MainForm() {
         activeTask: newTask,
         currentCycle: nextCycle,
         secondsRemaining,
-        formattedSecondsRemaining: "00:00",
+        formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining),
         tasks: [...prevState.tasks, newTask],
+      };
+    });
+  }
+
+  function handleInterruptTask() {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        activeTask: null,
+        secondsRemaining: 0,
+        formattedSecondsRemaining: "00:00",
+        tasks: prevState.tasks.map((task) => {
+          if (prevState.activeTask && prevState.activeTask.id === task.id) {
+            return { ...task, interruptDate: Date.now() };
+          }
+          return task;
+        }),
       };
     });
   }
@@ -64,6 +83,7 @@ export function MainForm() {
           labelText="task"
           placeholder="Digite aqui"
           ref={taskNameInput}
+          disabled={!!state.activeTask}
         />
       </div>
 
@@ -71,12 +91,32 @@ export function MainForm() {
         <p>Próximo intervalo é de 25min.</p>
       </div>
 
-      <div className={styles.formRow}>
-        <Cycles />
-      </div>
+      {state.currentCycle > 0 && (
+        <div className={styles.formRow}>
+          <Cycles />
+        </div>
+      )}
 
       <div className={styles.formRow}>
-        <DefaultButton icon={<PlayCircleIcon />} color="green" />
+        {!state.activeTask && (
+          <DefaultButton
+            aria-label="iniciar nova tarefa"
+            title="iniciar nova tarefa"
+            type="submit"
+            icon={<PlayCircleIcon />}
+          />
+        )}
+
+        {!!state.activeTask && (
+          <DefaultButton
+            aria-label="Interromper tarefa atual"
+            title="Interromper tarefa atual"
+            type="button"
+            icon={<StopCircleIcon />}
+            color="red"
+            onClick={handleInterruptTask}
+          />
+        )}
       </div>
     </form>
   );
