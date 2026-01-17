@@ -8,20 +8,28 @@
 import type { TaskModel } from "../../models/TaskModel";
 
 export type TaskActionTypes = {
-  START_TASK: "START_TASK",
-  INTERRUPT_TASK: "INTERRUPT_TASK",
-  RESET_STATE: "RESET_STATE",
-}
+  START_TASK: "START_TASK";
+  INTERRUPT_TASK: "INTERRUPT_TASK";
+  RESET_STATE: "RESET_STATE";
+  COUNT_DOWN: "COUNT_DOWN";
+  COMPLETE_TASK: "COMPLETE_TASK";
+};
 
 export type TaskActionModel =
   | {
-      type: 'START_TASK';
+      type: "START_TASK";
       payload: TaskModel;
     }
   | {
-      type: 'INTERRUPT_TASK';
-      payload: TaskModel;
+      type: "COUNT_DOWN";
+      payload: { secondsRemaining: number };
     }
   | {
-      type: 'RESET_STATE';
+      type: "INTERRUPT_TASK";
+    }
+  | {
+      type: "RESET_STATE";
+    }
+  | {
+      type: "COMPLETE_TASK";
     };

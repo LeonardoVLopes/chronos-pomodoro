@@ -8,4 +8,4 @@ export type TaskModel = {
   completeDate: number | null; // quando o timer chegar ao final'
   interruptDate: number | null; // quando a task for interrompido
   type: keyof TaskStateModel["config"]; // 'workTime' | 'shortBreakTime' | 'longBreakTime'
-}
+};
