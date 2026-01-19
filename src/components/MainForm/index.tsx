@@ -17,6 +17,7 @@ import { showMessage } from "../../adapters/showMessage";
 export function MainForm() {
   const { state, dispath } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
+  const lastTaskName = state.tasks[state.tasks.length - 1]?.name || "";
 
   // ciclos
   const nextCycle = getNextCycle(state.currentCycle);
@@ -50,7 +51,7 @@ export function MainForm() {
   }
 
   function handleInterruptTask() {
-    showMessage.dissmiss()
+    showMessage.dissmiss();
     showMessage.warning("tarefa interrompida!");
     dispath({ type: "INTERRUPT_TASK" });
   }
@@ -65,6 +66,7 @@ export function MainForm() {
           placeholder="Digite aqui"
           ref={taskNameInput}
           disabled={!!state.activeTask}
+          defaultValue={lastTaskName}
         />
       </div>
 
