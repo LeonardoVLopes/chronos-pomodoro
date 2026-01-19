@@ -12,6 +12,7 @@ import { getNextCycle } from "../../utils/getNextCycle";
 import { getNextCycleType } from "../../utils/getNextCycleType";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { Tips } from "../Tips";
+import { showMessage } from "../../adapters/showMessage";
 
 export function MainForm() {
   const { state, dispath } = useTaskContext();
@@ -27,8 +28,9 @@ export function MainForm() {
     if (taskNameInput.current === null) return;
 
     const taskName = taskNameInput.current.value.trim();
+
     if (!taskName) {
-      alert("digite o nome da tarefa");
+      showMessage.warn("digite o nome da tarefa");
       return;
     }
 
@@ -43,9 +45,13 @@ export function MainForm() {
     };
 
     dispath({ type: "START_TASK", payload: newTask });
+
+    showMessage.success("tarefa iniciada");
   }
 
   function handleInterruptTask() {
+    showMessage.dissmiss()
+    showMessage.warning("tarefa interrompida!");
     dispath({ type: "INTERRUPT_TASK" });
   }
 

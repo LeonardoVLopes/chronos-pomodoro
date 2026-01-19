@@ -1,4 +1,4 @@
-import gravitationalBeep from "../assets/sounds/gravitational-beep.mp3";
+import gravitationalBeep from "../assets/audio/gravitational_beep.mp3";
 
 export function loadBeep() {
   const audio = new Audio(gravitationalBeep);
