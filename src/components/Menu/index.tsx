@@ -50,13 +50,13 @@ export function Menu() {
         <HouseIcon />
       </RouterLink>
       <RouterLink
-        href="/historico"
+        href="/history"
         className={styles.menuLink}
         aria-label="ver histórico"
         title="ir para o histórico"
       >
         <HistoryIcon />
-      </RouterLink>  
+      </RouterLink>
       <RouterLink
         href="/settings"
         className={styles.menuLink}
