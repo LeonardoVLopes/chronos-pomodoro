@@ -6,7 +6,7 @@ import { type TaskActionModel } from "./taskActions";
 
 export function TaskReducer(
   state: TaskStateModel,
-  action: TaskActionModel
+  action: TaskActionModel,
 ): TaskStateModel {
   switch (action.type) {
     case "START_TASK": {
@@ -45,7 +45,7 @@ export function TaskReducer(
         ...state,
         secondsRemaining: action.payload.secondsRemaining,
         formattedSecondsRemaining: formatSecondsToMinutes(
-          action.payload.secondsRemaining
+          action.payload.secondsRemaining,
         ),
       };
     }
@@ -62,6 +62,9 @@ export function TaskReducer(
           return task;
         }),
       };
+    }
+    case "CHANGE_SETTINGS": {
+      return { ...state, config: action.payload };
     }
   }
   // reducer deve receber o estado e a acao, e sempre deve retornar o estado

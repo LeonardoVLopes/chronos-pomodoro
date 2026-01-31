@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Container } from "../../components/Container";
 import { GenericHtml } from "../../components/GenericHtml";
 import { Heading } from "../../components/Heading";
@@ -5,6 +6,10 @@ import { RouterLink } from "../../components/RouterLink";
 import { MainTemplate } from "../../templates/MainTemplate";
 
 export function AboutPomodoro() {
+  useEffect(() => {
+    document.title = "Entenda a Técnica Pomodoro 🍅 - Chronos Pomodoro";
+  }, []);
+
   return (
     <MainTemplate>
       <Container>
@@ -97,9 +102,9 @@ export function AboutPomodoro() {
           <h3>📊 Histórico automático</h3>
           <p>
             Todas as suas tarefas e ciclos concluídos ficam salvos no{" "}
-            <RouterLink href="/history">histórico</RouterLink>, com status de completas ou
-            interrompidas. Assim, você consegue acompanhar sua evolução ao longo
-            do tempo.
+            <RouterLink href="/history">histórico</RouterLink>, com status de
+            completas ou interrompidas. Assim, você consegue acompanhar sua
+            evolução ao longo do tempo.
           </p>
 
           <h2>Por que usar o Chronos Pomodoro?</h2>
@@ -112,8 +117,8 @@ export function AboutPomodoro() {
 
           <p>
             <strong>Pronto pra focar?</strong> Bora lá{" "}
-            <RouterLink href="/">voltar para a página inicial</RouterLink> e iniciar seus
-            Pomodoros! 🍅🚀
+            <RouterLink href="/">voltar para a página inicial</RouterLink> e
+            iniciar seus Pomodoros! 🍅🚀
           </p>
 
           <p>
